@@ -43,7 +43,7 @@ class TenantMigrations extends Command
      */
     public function handle()
     {
-        $companies = Company::where('principal', 0)->get();
+        $companies = Company::all();
 
         foreach($companies as $company){
             $this->tenant->setConnection($company);

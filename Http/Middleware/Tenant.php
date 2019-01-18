@@ -17,12 +17,15 @@ class Tenant
      */
     public function handle($request, Closure $next)
     {
-        $company = $this->getCompany($request->getHost());
-        if(!$company && $request->url() != route('404-tenant')){
-            return redirect()->route('404-tenant');
-        }else if($request->url() != route('404-tenant')){
-            app(ManagerTenant::class)->setConnection($company);
-            $this->setSessionCompany($company);
+        $manager =  app(ManagerTenant::class);
+        if(!$manager->domainIsMain()){
+            $company = $this->getCompany($request->getHost());
+            if(!$company && $request->url() != route('404-tenant')){
+                return redirect()->route('404-tenant');
+            }else if($request->url() != route('404-tenant')){
+                $manager->setConnection($company);
+                $this->setSessionCompany($company);
+            }
         }
         return $next($request);
 

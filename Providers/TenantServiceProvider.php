@@ -5,7 +5,7 @@ namespace Modules\Tenants\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
-use Modules\Tentans\Console\Commands\TenantMigrations;
+use Modules\Tenants\Console\Commands\TenantMigrations;
 
 class TenantServiceProvider extends ServiceProvider
 {
@@ -16,12 +16,12 @@ class TenantServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*
-        Route::namespace('Modules\Core\Http\Controllers')
+
+        Route::namespace('Modules\Tenants\Http\Controllers')
             ->group(__DIR__ . '/../Routes/web.php');
-        Route::namespace('Modules\Core\Http\Controllers')
+        Route::namespace('Modules\Tenants\Http\Controllers')
             ->group(__DIR__ . '/../Routes/api.php');
-        */
+
 
         $this->loadMigrationsFrom(__DIR__ . '/../Migrations');
 
@@ -47,7 +47,7 @@ class TenantServiceProvider extends ServiceProvider
     {
 
         $this->mergeConfigFrom(
-            config_path('tenant.php'),
+            __DIR__ . '/../Config/database.php',
             'database'
         );
 
@@ -64,6 +64,7 @@ class TenantServiceProvider extends ServiceProvider
     {
         $config = $this->app['config']->get($key, []);
         $this->app['config']->set($key, $this->mergeConfig(require $path, $config));
+
     }
     /**
      * Merges the configs together and takes multi-dimensional arrays into account.
