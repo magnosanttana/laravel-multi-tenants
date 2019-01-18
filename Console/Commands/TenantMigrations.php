@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tentans\Console\Commands;
+namespace Modules\Tenants\Console\Commands;
 
 use Illuminate\Console\Command;
 use Modules\Tenants\ManagerTenant;
