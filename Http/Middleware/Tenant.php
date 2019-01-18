@@ -22,6 +22,7 @@ class Tenant
             return redirect()->route('404-tenant');
         }else if($request->url() != route('404-tenant')){
             app(ManagerTenant::class)->setConnection($company);
+            $this->setSessionCompany($company);
         }
         return $next($request);
 
@@ -29,5 +30,9 @@ class Tenant
 
     public function getCompany($host){
         return Company::where('dominio', $host)->first();
+    }
+
+    public function setSessionCompany($company){
+        session()->put('company', $company);
     }
 }
